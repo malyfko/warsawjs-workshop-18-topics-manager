@@ -1,0 +1,16 @@
+.add-event-form {
+  display: flex;
+  width: 60%;
+  margin: 2rem auto;
+}
+
+.button.add-event {
+  background-color: dodgerblue;
+  color: white;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.input.topic-title {
+  width: 100%;
+}

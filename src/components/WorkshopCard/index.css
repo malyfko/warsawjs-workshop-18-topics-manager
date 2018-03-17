@@ -1,0 +1,17 @@
+.column {
+  display: flex;
+}
+
+.column .card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  margin-top: auto;
+}
+
+.button {
+  padding: .1em;
+}

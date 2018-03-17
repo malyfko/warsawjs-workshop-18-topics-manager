@@ -1,0 +1,20 @@
+[
+  {
+    "title": "ReactJS",
+    "added-by": "Kamil Dzeniszewski",
+    "trainers": ["Tati Platonova", "Piotr Zientara"],
+    "votes": 10
+  },
+  {
+    "title": "RxJS",
+    "added-by": "Piotr Kowalski",
+    "trainers": ["Piotr Kowalski"],
+    "votes": 5
+  },
+  {
+    "title": "Node.js",
+    "added-by": "Robert Kawecki",
+    "trainers": ["Robert Kawecki", "Tomasz Budrewicz", "Piotr Kowalski"],
+    "votes": 40
+  }
+]
