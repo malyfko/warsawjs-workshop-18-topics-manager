@@ -1,0 +1,29 @@
+.login {
+  display: flex;
+  margin-left: auto;
+  margin-right: 20px;
+  width: 200px;
+}
+
+.login .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.login .user-info {
+  display: flex;
+  align-items: center;
+}
+
+.login .login-button {
+  padding: 5px 10px;
+  height: 40px;
+  margin: 2rem 0;
+}
+
+.login .login-button .github-icon.icon,
+.login .user-info .user-avatar.icon {
+  margin-left: 5px;
+}
+
