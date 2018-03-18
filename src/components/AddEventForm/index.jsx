@@ -15,6 +15,16 @@ class AddEventForm extends Component {
     });
   };
 
+   handleClick = () => {
+     const { value } = this.state;
+     if (value) {
+      this.props.onAdd(value);
+      this.setState({
+        value: '',
+      });
+     }
+   };
+
   render() {
     const { value } = this.state;
 
@@ -27,7 +37,13 @@ class AddEventForm extends Component {
           value={value}
           onChange={this.handleInputChange}
         />
-        <button className="add-event button">Zapisz temat</button>
+        <button
+          className="add-event button"
+          onClick={this.handleClick}
+          disabled={!value}
+        >
+          Zapisz temat
+        </button>
       </div>
     );
   }

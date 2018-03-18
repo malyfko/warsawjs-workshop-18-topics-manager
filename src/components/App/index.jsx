@@ -11,6 +11,8 @@ class App extends Component {
     super();
     this.state = {
       authorized: false,
+      workshopsList: JSON.parse(localStorage.getItem('workshopsList')) || workshops,
+      user: null,
     }
   }
 
@@ -20,16 +22,41 @@ class App extends Component {
     });
   };
 
+  authorizeUser = (data) => {
+    this.setState({
+      user: data,
+    });
+  };
+
+  handleLogin = (data) => {
+    this.setAutorization();
+    this.authorizeUser(data);
+  };
+
+  updateWorkshopsList = (value) => {
+    const newEvent = {
+      title: value,
+      "added-by": this.state.user.name,
+      trainers: [],
+      votes: 0,
+    };
+    this.setState({
+      workshopsList: [...this.state.workshopsList, newEvent],
+    }, () => {
+      localStorage.setItem('workshopsList', JSON.stringify(this.state.workshopsList))
+    });
+  };
+
   render () {
-    const { authorized } = this.state;
+    const { authorized, workshopsList, user } = this.state;
 
     return (
       <div className="app">
         <h1 className="app-title title is-1">Topics manager</h1>
-        <Login onLogin={this.setAutorization} authorized={authorized} />
-        {authorized && <AddEventForm />}
+        <Login onLogin={this.handleLogin} authorized={authorized} />
+        {authorized && <AddEventForm onAdd={this.updateWorkshopsList} />}
         <div className="workshops-list columns">
-          {workshops.map((workshop) => (
+          {workshopsList.map((workshop) => (
             <WorkshopCard
               {...workshop}
               key={workshop.title}
@@ -39,7 +66,5 @@ class App extends Component {
       </div>
     )}
 }
-
-
 
 export default App;
