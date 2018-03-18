@@ -3,6 +3,7 @@ import workshops from '../../data/workshops.json';
 import { WorkshopCard } from '../WorkshopCard';
 import { AddEventForm } from '../AddEventForm';
 import { Login } from '../Login';
+import { getUserDataByAccessToken } from '../Login/service';
 import './index.css';
 
 class App extends Component {
@@ -47,13 +48,24 @@ class App extends Component {
     });
   };
 
+  componentDidMount () {
+    getUserDataByAccessToken().then((data) => {
+      if(data) {
+        this.setState({
+          user: data,
+          authorized: true,
+        });
+      }
+    });
+  }
+
   render () {
     const { authorized, workshopsList, user } = this.state;
 
     return (
       <div className="app">
         <h1 className="app-title title is-1">Topics manager</h1>
-        <Login onLogin={this.handleLogin} authorized={authorized} />
+        <Login onLogin={this.handleLogin} authorized={authorized} user={user} />
         {authorized && <AddEventForm onAdd={this.updateWorkshopsList} />}
         <div className="workshops-list columns">
           {workshopsList.map((workshop) => (
