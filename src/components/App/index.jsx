@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import workshops from '../../data/workshops.json';
-import { WorkshopCard } from '../WorkshopCard';
-import { AddEventForm } from '../AddEventForm';
-import { Login } from '../Login';
-import { getUserDataByAccessToken } from '../Login/service';
+import {WorkshopCard} from '../WorkshopCard';
+import {AddEventForm} from '../AddEventForm';
+import {Login} from '../Login';
+import {getUserDataByAccessToken} from '../Login/service';
 import './index.css';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       authorized: false,
       workshopsList: JSON.parse(localStorage.getItem('workshopsList')) || workshops,
-      user: null,
+      user: {},
     }
   }
 
@@ -48,25 +48,29 @@ class App extends Component {
     });
   };
 
-  componentDidMount () {
-    getUserDataByAccessToken().then((data) => {
-      if(data) {
-        this.setState({
-          user: data,
-          authorized: true,
-        });
-      }
-    });
+  componentDidMount() {
+    try {
+      getUserDataByAccessToken().then((data) => {
+        if (data) {
+          this.setState({
+            user: data,
+            authorized: true,
+          });
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  render () {
-    const { authorized, workshopsList, user } = this.state;
+  render() {
+    const {authorized, workshopsList, user} = this.state;
 
     return (
       <div className="app">
         <h1 className="app-title title is-1">Topics manager</h1>
-        <Login onLogin={this.handleLogin} authorized={authorized} user={user} />
-        {authorized && <AddEventForm onAdd={this.updateWorkshopsList} />}
+        <Login onLogin={this.handleLogin} authorized={authorized} user={user}/>
+        {authorized && <AddEventForm onAdd={this.updateWorkshopsList}/>}
         <div className="workshops-list columns">
           {workshopsList.map((workshop) => (
             <WorkshopCard
@@ -76,7 +80,8 @@ class App extends Component {
             />))}
         </div>
       </div>
-    )}
+    )
+  }
 }
 
 export default App;

@@ -40,5 +40,5 @@ export const getUserDataByAccessToken = () => {
         console.log(error);
       });
   }
-
+  return;
 };
