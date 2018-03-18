@@ -12,13 +12,13 @@ export class Login extends Component {
     }
   }
 
-  handleLogin = (event) => {
+  handleLogin = () => {
     login().then((data) => {
       this.setState({
         userName: data.login,
         userIcon: data.avatar_url,
       });
-      this.props.onLogin();
+      this.props.onLogin(data);
     });
   };
 
