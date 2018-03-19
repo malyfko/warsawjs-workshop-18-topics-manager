@@ -39,6 +39,7 @@ export const getUserDataByAccessToken = () => {
       .catch((error) => {
         console.log(error);
       });
+  } else {
+    return new Promise((resolve, reject) => reject(new Error('Session expired')))
   }
-  return;
 };

@@ -49,7 +49,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    try {
       getUserDataByAccessToken().then((data) => {
         if (data) {
           this.setState({
@@ -57,10 +56,8 @@ class App extends Component {
             authorized: true,
           });
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      })
+        .catch((error) => { console.log(error) });
   }
 
   render() {
