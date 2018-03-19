@@ -20,6 +20,14 @@ export const login = () => {
   })
 };
 
+export const logout = () => {
+  return github.logout().then(() => {
+    console.log('logged out');
+  }, (error) => {
+    console.log('Signin error: ' + error.error.message)
+  })
+};
+
 const validAccess = (session) => {
   const currentTime = (new Date()).getTime() / 1000;
   return session && session.access_token && session.expires > currentTime;
@@ -32,8 +40,11 @@ export const getUserDataByAccessToken = () => {
     return fetch(`https://api.github.com/user?access_token=${accessToken}`)
       .then((response) => {
         if (response.status !== 200) {
-          return;
+          throw new Error(response.statusText);
         }
+        return response;
+      })
+      .then((response) => {
         return response.json().then((data) => data);
       })
       .catch((error) => {

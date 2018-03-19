@@ -14,12 +14,21 @@ class WorkshopCard extends Component {
     const updatedVotesNumber = this.state.votes + 1;
     this.setState({
       votes: updatedVotesNumber,
+      disabledAddTrainerButton: false,
+    });
+  };
+
+  handleAddTrainer = () => {
+    const { onUpdateTrainersList, workshopId } = this.props;
+    onUpdateTrainersList(workshopId);
+    this.setState({
+      disabledAddTrainerButton: true,
     });
   };
 
   render() {
     const { title, trainers, authorized } = this.props;
-    const { votes } = this.state;
+    const { votes, disabledAddTrainerButton } = this.state;
 
     return(
       <div className="column is-3">
@@ -44,7 +53,8 @@ class WorkshopCard extends Component {
             <button
               className="card-footer-item button"
               title={authorized ? 'Dołącz do listy trenerów' : 'Załoguj żeby się dołączyć'}
-              disabled={!authorized}
+              disabled={!authorized || disabledAddTrainerButton}
+              onClick={this.handleAddTrainer}
             >
               ➕
             </button>

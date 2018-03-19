@@ -17,21 +17,30 @@ class App extends Component {
     }
   }
 
-  setAutorization = () => {
+  setAutorization = (authorization) => {
     this.setState({
-      authorized: true,
+      authorized: authorization,
     });
   };
 
-  authorizeUser = (data) => {
+  setUserData = (data) => {
     this.setState({
       user: data,
     });
   };
 
   handleLogin = (data) => {
-    this.setAutorization();
-    this.authorizeUser(data);
+    this.setAutorization(true);
+    this.setUserData(data);
+  };
+
+  handleLogout = () => {
+    this.setAutorization(false);
+    this.setUserData({});
+  };
+
+  persistWorkshopsList = () => {
+    localStorage.setItem('workshopsList', JSON.stringify(this.state.workshopsList))
   };
 
   updateWorkshopsList = (value) => {
@@ -43,9 +52,17 @@ class App extends Component {
     };
     this.setState({
       workshopsList: [...this.state.workshopsList, newEvent],
-    }, () => {
-      localStorage.setItem('workshopsList', JSON.stringify(this.state.workshopsList))
-    });
+    }, this.persistWorkshopsList);
+  };
+
+  updateTrainersList = (workshopId) => {
+    this.setState(prevState => {
+      const workshops = prevState.workshopsList;
+      workshops[workshopId].trainers.push(prevState.user.login);
+      return {
+        workshopsList: workshops
+      }
+    }, this.persistWorkshopsList)
   };
 
   componentDidMount() {
@@ -66,14 +83,21 @@ class App extends Component {
     return (
       <div className="app">
         <h1 className="app-title title is-1">Topics manager</h1>
-        <Login onLogin={this.handleLogin} authorized={authorized} user={user}/>
+        <Login
+          onLogin={this.handleLogin}
+          onLogout={this.handleLogout}
+          authorized={authorized}
+          user={user}
+        />
         {authorized && <AddEventForm onAdd={this.updateWorkshopsList}/>}
         <div className="workshops-list columns">
-          {workshopsList.map((workshop) => (
+          {workshopsList.map((workshop, index) => (
             <WorkshopCard
               {...workshop}
               key={workshop.title}
               authorized={authorized}
+              onUpdateTrainersList={this.updateTrainersList}
+              workshopId={index}
             />))}
         </div>
       </div>

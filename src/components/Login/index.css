@@ -2,7 +2,7 @@
   display: flex;
   margin-left: auto;
   margin-right: 20px;
-  width: 200px;
+  justify-content: flex-end;
 }
 
 .login .icon {
@@ -16,13 +16,14 @@
   align-items: center;
 }
 
-.login .login-button {
+.login .button {
   padding: 5px 10px;
   height: 40px;
   margin: 2rem 0;
 }
 
 .login .login-button .github-icon.icon,
+.login .logout-button,
 .login .user-info .user-avatar.icon {
   margin-left: 5px;
 }
